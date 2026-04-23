@@ -36,32 +36,57 @@ class Validator:
 
     @staticmethod
     def validate_system_state(system_state):
-        if not system_state.get_all_processes():
-            return False, "System must have at least one process"
+        try:
+            if not system_state:
+                return False, "System state cannot be null"
+            
+            processes = system_state.get_all_processes()
+            resources = system_state.get_all_resources()
+            
+            if not processes:
+                return False, "System must have at least one process"
 
-        if not system_state.get_all_resources():
-            return False, "System must have at least one resource"
+            if not resources:
+                return False, "System must have at least one resource"
 
-        resource_ids = {r.rid for r in system_state.get_all_resources()}
+            resource_ids = {r.rid for r in resources}
 
-        for process in system_state.get_all_processes():
-            # Validate max_need >= allocation for every resource
-            if process.max_need:
-                for rid in resource_ids:
-                    alloc_count    = process.allocated.count(rid)
-                    max_need_count = process.max_need.count(rid)
-                    if max_need_count < alloc_count:
-                        return (
-                            False,
-                            f"Process {process.pid}: max_need ({max_need_count}) for "
-                            f"resource {rid} is less than allocation ({alloc_count}).",
-                        )
+            for process in processes:
+                if not process:
+                    return False, f"Process cannot be null"
+                
+                if not hasattr(process, 'pid') or not process.pid:
+                    return False, f"Process must have a valid pid"
+                
+                # Validate max_need >= allocation for every resource
+                if hasattr(process, 'max_need') and process.max_need:
+                    for rid in resource_ids:
+                        alloc_count = process.allocated.count(rid) if hasattr(process, 'allocated') and process.allocated else 0
+                        max_need_count = process.max_need.count(rid) if process.max_need else 0
+                        if max_need_count < alloc_count:
+                            return (
+                                False,
+                                f"Process {process.pid}: max_need ({max_need_count}) for "
+                                f"resource {rid} is less than allocation ({alloc_count}).",
+                            )
 
-            for rid in process.allocated + process.requested + process.max_need:
-                if rid not in resource_ids:
-                    return False, f"Process {process.pid} references undefined resource {rid}"
+                # Validate resource references
+                all_refs = []
+                if hasattr(process, 'allocated') and process.allocated:
+                    all_refs.extend(process.allocated)
+                if hasattr(process, 'requested') and process.requested:
+                    all_refs.extend(process.requested)
+                if hasattr(process, 'max_need') and process.max_need:
+                    all_refs.extend(process.max_need)
+                
+                for rid in all_refs:
+                    if rid not in resource_ids:
+                        return False, f"Process {process.pid} references undefined resource {rid}"
 
-        return True, "Valid"
+            return True, "Valid"
+            
+        except Exception as e:
+            return False, f"System state validation error: {str(e)}"
 
     @staticmethod
     def validate_request(data):
