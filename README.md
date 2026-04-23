@@ -209,6 +209,52 @@ Notes:
 - Matplotlib is configured for headless environments (`Agg` backend).
 - No environment variables are required for basic deployment.
 
+## Fastest Deployment (No Setup Headache)
+
+If you just want a live URL quickly, use Render or Railway with these settings.
+
+### Option A: Render (recommended)
+
+1. Push this repo to your fork branch `ansh`.
+2. In Render, click **New +** -> **Web Service** -> connect your GitHub repo.
+3. Render will auto-read `render.yaml` from repo root.
+4. Click **Create Web Service**.
+
+If Render asks for manual commands, use:
+
+```bash
+pip install -r backend/requirements.txt
+```
+
+```bash
+gunicorn app:app --chdir backend
+```
+
+Health check path:
+
+```text
+/api/health
+```
+
+### Option B: Railway
+
+1. Create a new project from GitHub repo.
+2. Select branch `ansh`.
+3. Railway will detect Python.
+4. Set start command to:
+
+```bash
+gunicorn app:app --chdir backend
+```
+
+5. Deploy and open generated URL.
+
+### Why this works
+
+- Backend serves frontend files directly.
+- Same domain hosts UI and API.
+- You only run one process (`gunicorn`) and everything is live.
+
 ## Input Modeling Notes
 
 - Multi-instance resources are represented via `instances` in the resource list.
