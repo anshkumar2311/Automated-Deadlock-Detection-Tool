@@ -1,3 +1,6 @@
+import matplotlib
+matplotlib.use('Agg')
+
 from flask import Flask, send_from_directory
 from flask_cors import CORS
 from api.routes import api

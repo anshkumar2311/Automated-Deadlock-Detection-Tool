@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-const API_BASE = window.location.origin + '/api';
+const API_BASE = `${window.location.origin}/api`;
 
 const state = {
   availableResources: [],
@@ -455,7 +455,7 @@ function renderGraph(data) {
   if (data.graph_url) {
     $('graph-panel').innerHTML = `
       <div class="graph-wrap">
-        <img src="http://localhost:5000${data.graph_url}?t=${Date.now()}"
+        <img src="${window.location.origin}${data.graph_url}?t=${Date.now()}"
              alt="Resource Allocation Graph" />
       </div>`;
   }
