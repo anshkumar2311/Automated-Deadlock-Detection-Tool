@@ -1,11 +1,7 @@
-/* ══════════════════════════════════════════════════════════════════════
-   OS Simulation — Deadlock Detection  |  Frontend Logic
-   ══════════════════════════════════════════════════════════════════════ */
-'use strict';
+﻿'use strict';
 
 const API_BASE = 'http://localhost:5000/api';
 
-// ── State ─────────────────────────────────────────────────────────────
 const state = {
   availableResources: [],
   lastResult: null,
@@ -13,10 +9,8 @@ const state = {
   simIndex: 0,
 };
 
-// ── DOM helpers ───────────────────────────────────────────────────────
 const $ = id => document.getElementById(id);
 
-// ── Init ──────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   addResource();
   addProcess();
@@ -56,7 +50,6 @@ function switchTab(name) {
   });
 }
 
-// ── renderResources ───────────────────────────────────────────────────
 function addResource(data = {}) {
   const container = $('resources-container');
   const row = document.createElement('div');
@@ -87,7 +80,6 @@ function syncResources() {
   document.querySelectorAll('.multi-select').forEach(ms => ms._refresh && ms._refresh());
 }
 
-// ── renderProcesses ───────────────────────────────────────────────────
 function addProcess(data = {}) {
   const container = $('processes-container');
   const card = document.createElement('div');
@@ -124,7 +116,6 @@ function addProcess(data = {}) {
   initMultiSelect(card.querySelector('[data-field="max_need"]'), data.max_need || []);
 }
 
-// ── Multi-select ──────────────────────────────────────────────────────
 function initMultiSelect(container, initial = []) {
   const selected = new Set(initial);
 
@@ -230,7 +221,6 @@ document.addEventListener('click', e => {
   if (!e.target.closest('.multi-select')) closeAllDropdowns();
 });
 
-// ── Collect form data ─────────────────────────────────────────────────
 function collectData() {
   const resources = [];
   document.querySelectorAll('#resources-container .resource-row').forEach(row => {
@@ -251,7 +241,6 @@ function collectData() {
   return { resources, processes };
 }
 
-// ── Validation ────────────────────────────────────────────────────────
 function validate(data) {
   const errors = [];
   if (!data.resources.length) errors.push('At least one resource must be defined.');
@@ -272,7 +261,6 @@ function validate(data) {
   return errors;
 }
 
-// ── Run detection ─────────────────────────────────────────────────────
 async function runDetection() {
   const data = collectData();
   const errors = validate(data);
@@ -315,7 +303,6 @@ async function runDetection() {
   }
 }
 
-// ── Load sample ───────────────────────────────────────────────────────
 async function loadSample() {
   setLoading(true, 'Loading sample…');
   try {
@@ -336,7 +323,6 @@ async function loadSample() {
   }
 }
 
-// ── Clear ─────────────────────────────────────────────────────────────
 function clearAll() {
   $('resources-container').innerHTML = '';
   $('processes-container').innerHTML = '';
@@ -356,7 +342,6 @@ function clearResults() {
   state.simIndex   = 0;
 }
 
-// ── renderResults ─────────────────────────────────────────────────────
 function renderResults(data, validationErrors) {
   const el = $('results-container');
 
@@ -476,7 +461,6 @@ function renderGraph(data) {
   }
 }
 
-// ── Error renderers ───────────────────────────────────────────────────
 function renderApiError(json) {
   const details = json.details;
   $('results-container').innerHTML = `
@@ -495,7 +479,6 @@ function renderConnError() {
     </div>`;
 }
 
-// ── Simulation tab (inline all steps) ────────────────────────────────
 function renderSimulationTab() {
   const el = $('simulation-container');
   if (!state.simSteps.length) {
@@ -529,12 +512,10 @@ function renderSimulationTab() {
   $('btn-open-modal')?.addEventListener('click', openSimModal);
 }
 
-// ── "Simulate" navbar button → switch to tab ──────────────────────────
 function openSimulation() {
   switchTab('simulation');
 }
 
-// ── Simulation modal (step-by-step) ──────────────────────────────────
 function openSimModal() {
   if (!state.simSteps.length) return;
   state.simIndex = 0;
@@ -581,7 +562,6 @@ function updateSimControls() {
   $('sim-next').disabled = state.simIndex === state.simSteps.length - 1;
 }
 
-// ── Report download ───────────────────────────────────────────────────
 async function downloadReport() {
   const data = collectData();
   const errors = validate(data);
@@ -605,7 +585,6 @@ async function downloadReport() {
   finally { setLoading(false); }
 }
 
-// ── Helpers ───────────────────────────────────────────────────────────
 function banner(type, title, desc) {
   return `
     <div class="status-banner banner-${type}">

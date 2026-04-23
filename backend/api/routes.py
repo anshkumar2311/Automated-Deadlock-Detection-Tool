@@ -192,8 +192,6 @@ def health_check():
     }), 200
 
 
-# ── Helpers ───────────────────────────────────────────────────────────────
-
 def _build_simulation(data, result):
     """
     Build an ordered list of simulation steps from the raw input + detection result.

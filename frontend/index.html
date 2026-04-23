@@ -11,7 +11,6 @@
 </head>
 <body>
 
-  <!-- ── Navbar ──────────────────────────────────────────────────────── -->
   <nav class="navbar">
     <div class="navbar-inner">
       <div class="navbar-brand">
@@ -43,17 +42,14 @@
     </div>
   </nav>
 
-  <!-- ── Main Layout ─────────────────────────────────────────────────── -->
   <main class="dashboard">
 
-    <!-- LEFT: Configuration ─────────────────────────────────────────── -->
     <aside class="panel panel-config">
       <div class="panel-header">
         <h1 class="panel-title">System Configuration</h1>
         <p class="panel-subtitle">Define resources and processes</p>
       </div>
 
-      <!-- Resources ──────────────────────────────────────────────────── -->
       <section class="config-section">
         <div class="section-header">
           <h2 class="section-title">Resources</h2>
@@ -67,7 +63,6 @@
         <div id="resources-container"></div>
       </section>
 
-      <!-- Processes ──────────────────────────────────────────────────── -->
       <section class="config-section">
         <div class="section-header">
           <h2 class="section-title">Processes</h2>
@@ -76,7 +71,6 @@
         <div id="processes-container"></div>
       </section>
 
-      <!-- Mobile actions ─────────────────────────────────────────────── -->
       <div class="mobile-actions">
         <button class="btn btn-primary btn-full" id="btn-detect-mobile">Run Detection</button>
         <div class="mobile-row">
@@ -86,7 +80,6 @@
       </div>
     </aside>
 
-    <!-- RIGHT: Results ─────────────────────────────────────────────────── -->
     <section class="panel panel-results" aria-live="polite">
       <div class="panel-header results-header">
         <div>
@@ -132,7 +125,6 @@
     </section>
   </main>
 
-  <!-- ── Simulation Modal ────────────────────────────────────────────── -->
   <div id="sim-modal" class="modal-backdrop" hidden role="dialog" aria-modal="true" aria-labelledby="sim-modal-title">
     <div class="modal">
       <div class="modal-header">
@@ -152,7 +144,6 @@
     </div>
   </div>
 
-  <!-- ── Loading Overlay ─────────────────────────────────────────────── -->
   <div id="loading-overlay" class="loading-overlay" hidden aria-live="assertive">
     <div class="loading-card">
       <div class="spinner"></div>

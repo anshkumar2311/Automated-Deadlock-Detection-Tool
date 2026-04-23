@@ -1,4 +1,4 @@
-"""
+﻿"""
 PDF report generator using ReportLab.
 Produces a professional deadlock-detection report with:
   - system input summary
@@ -26,7 +26,6 @@ from reportlab.platypus import (
     TableStyle,
 )
 
-# ── Colour palette ────────────────────────────────────────────────────────
 C_PRIMARY   = colors.HexColor('#2563eb')
 C_DANGER    = colors.HexColor('#dc2626')
 C_SUCCESS   = colors.HexColor('#16a34a')

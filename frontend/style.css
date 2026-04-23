@@ -1,15 +1,10 @@
-/* ══════════════════════════════════════════════════════════════════════
-   OS Simulation — Deadlock Detection  |  Complete UI
-   ══════════════════════════════════════════════════════════════════════ */
-
-/* ── Reset ──────────────────────────────────────────────────────────── */
+﻿
 *, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* ── Design tokens ──────────────────────────────────────────────────── */
 :root {
   --primary:          #2563eb;
   --primary-hover:    #1d4ed8;
@@ -41,7 +36,6 @@
   --transition:       140ms ease;
 }
 
-/* ── Base ───────────────────────────────────────────────────────────── */
 html { font-size: 14px; }
 
 body {
@@ -53,7 +47,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── Navbar ─────────────────────────────────────────────────────────── */
 .navbar {
   position: sticky;
   top: 0;
@@ -107,7 +100,6 @@ body {
   gap: 8px;
 }
 
-/* ── Buttons ────────────────────────────────────────────────────────── */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -200,7 +192,6 @@ body {
 
 .btn-full { width: 100%; }
 
-/* ── Dashboard layout ───────────────────────────────────────────────── */
 .dashboard {
   max-width: 1600px;
   margin: 0 auto;
@@ -211,7 +202,6 @@ body {
   align-items: start;
 }
 
-/* ── Panels ─────────────────────────────────────────────────────────── */
 .panel {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -245,7 +235,6 @@ body {
   margin-top: 2px;
 }
 
-/* ── Tabs ───────────────────────────────────────────────────────────── */
 .tabs {
   display: flex;
   gap: 2px;
@@ -283,7 +272,6 @@ body {
 
 .tab-panel[hidden] { display: none; }
 
-/* ── Config sections ────────────────────────────────────────────────── */
 .config-section {
   padding: 18px 24px;
   border-bottom: 1px solid var(--border);
@@ -306,7 +294,6 @@ body {
   letter-spacing: 0.06em;
 }
 
-/* ── Resource table ─────────────────────────────────────────────────── */
 .resource-table-head {
   display: grid;
   grid-template-columns: 1fr 100px 36px;
@@ -333,7 +320,6 @@ body {
   border-bottom: 1px solid var(--bg);
 }
 
-/* ── Process cards ──────────────────────────────────────────────────── */
 .process-card {
   background: var(--bg);
   border: 1px solid var(--border);
@@ -377,7 +363,6 @@ body {
   letter-spacing: 0.04em;
 }
 
-/* ── Inputs ─────────────────────────────────────────────────────────── */
 input[type="text"],
 input[type="number"] {
   font-family: var(--font);
@@ -403,7 +388,6 @@ input::placeholder { color: var(--text-muted); }
 
 input.input-error { border-color: var(--danger); }
 
-/* ── Multi-select ───────────────────────────────────────────────────── */
 .multi-select { position: relative; }
 
 .ms-trigger {
@@ -518,7 +502,6 @@ input.input-error { border-color: var(--danger); }
   font-size: 12px;
 }
 
-/* ── Mobile actions ─────────────────────────────────────────────────── */
 .mobile-actions {
   display: none;
   padding: 18px 24px;
@@ -532,7 +515,6 @@ input.input-error { border-color: var(--danger); }
   gap: 8px;
 }
 
-/* ── Empty state ────────────────────────────────────────────────────── */
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -556,7 +538,6 @@ input.input-error { border-color: var(--danger); }
   line-height: 1.6;
 }
 
-/* ── Status banner ──────────────────────────────────────────────────── */
 .status-banner {
   display: flex;
   align-items: center;
@@ -599,7 +580,6 @@ input.input-error { border-color: var(--danger); }
   margin-top: 2px;
 }
 
-/* ── Result sections ────────────────────────────────────────────────── */
 .result-section { margin-bottom: 18px; }
 
 .result-section-title {
@@ -617,7 +597,6 @@ input.input-error { border-color: var(--danger); }
   margin: 18px 0;
 }
 
-/* ── Info grid ──────────────────────────────────────────────────────── */
 .info-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -650,7 +629,6 @@ input.input-error { border-color: var(--danger); }
   margin-top: 3px;
 }
 
-/* ── Badges ─────────────────────────────────────────────────────────── */
 .badge-list {
   display: flex;
   flex-wrap: wrap;
@@ -672,7 +650,6 @@ input.input-error { border-color: var(--danger); }
   border: 1px solid var(--danger-border);
 }
 
-/* ── Strategy cards ─────────────────────────────────────────────────── */
 .strategy-list { display: flex; flex-direction: column; gap: 8px; }
 
 .strategy-card {
@@ -696,7 +673,6 @@ input.input-error { border-color: var(--danger); }
 .strategy-card-desc  { font-size: 12px; color: var(--text-secondary); }
 .strategy-card-meta  { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
 
-/* ── Alert card ─────────────────────────────────────────────────────── */
 .alert-card {
   border: 1px solid var(--danger-border);
   background: var(--danger-light);
@@ -722,7 +698,6 @@ input.input-error { border-color: var(--danger); }
 
 .alert-list li { margin-bottom: 3px; }
 
-/* ── Graph panel ────────────────────────────────────────────────────── */
 #graph-panel { min-height: 300px; }
 
 .graph-wrap {
@@ -741,7 +716,6 @@ input.input-error { border-color: var(--danger); }
   margin: 0 auto;
 }
 
-/* ── Simulation tab inline list ─────────────────────────────────────── */
 .sim-tab-header {
   display: flex;
   align-items: center;
@@ -763,7 +737,6 @@ input.input-error { border-color: var(--danger); }
   gap: 8px;
 }
 
-/* ── Simulation steps ───────────────────────────────────────────────── */
 .sim-step {
   background: var(--bg);
   border: 1px solid var(--border);
@@ -829,7 +802,6 @@ input.input-error { border-color: var(--danger); }
   margin-top: 6px;
 }
 
-/* ── Modal ──────────────────────────────────────────────────────────── */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -890,7 +862,6 @@ input.input-error { border-color: var(--danger); }
   color: var(--text-secondary);
 }
 
-/* ── Loading overlay ────────────────────────────────────────────────── */
 .loading-overlay {
   position: fixed;
   inset: 0;
@@ -933,7 +904,6 @@ input.input-error { border-color: var(--danger); }
   color: var(--text-secondary);
 }
 
-/* ── Responsive ─────────────────────────────────────────────────────── */
 @media (max-width: 1100px) {
   .dashboard { grid-template-columns: 440px 1fr; }
 }
