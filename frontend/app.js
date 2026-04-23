@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-const API_BASE = `${window.location.origin}/api`;
+const API_BASE = "https://your-backend-url.onrender.com/api";
 
 const state = {
   availableResources: [],
