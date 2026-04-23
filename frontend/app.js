@@ -33,7 +33,7 @@ function bindNav() {
   $('btn-clear-mobile')?.addEventListener('click', clearAll);
   $('btn-add-resource')?.addEventListener('click', () => addResource());
   $('btn-add-process')?.addEventListener('click', () => addProcess());
-  $('btn-simulate')?.addEventListener('click', openSimModal);
+  $('btn-simulate')?.addEventListener('click', openSimulation);
   $('btn-report')?.addEventListener('click', downloadReport);
   $('sim-modal-close')?.addEventListener('click', closeSimModal);
   $('sim-prev')?.addEventListener('click', simPrev);
@@ -303,6 +303,7 @@ async function runDetection() {
     state.lastResult = json;
     state.simSteps   = json.simulation || [];
     renderResults(json);
+    renderSimulationTab();
     renderGraph(json);
     setPostDetect(true);
     switchTab('results');
@@ -352,6 +353,7 @@ function clearResults() {
   $('graph-panel').innerHTML = emptyHTML('globe', 'No graph yet', 'Run detection to generate the Resource Allocation Graph.');
   state.lastResult = null;
   state.simSteps   = [];
+  state.simIndex   = 0;
 }
 
 // ── renderResults ─────────────────────────────────────────────────────
@@ -493,18 +495,57 @@ function renderConnError() {
     </div>`;
 }
 
-// ── Simulation modal ──────────────────────────────────────────────────
+// ── Simulation tab (inline all steps) ────────────────────────────────
+function renderSimulationTab() {
+  const el = $('simulation-container');
+  if (!state.simSteps.length) {
+    el.innerHTML = emptyHTML('play', 'No simulation yet', 'Run detection first, then click Simulate to step through execution.');
+    return;
+  }
+
+  el.innerHTML = `
+    <div class="sim-tab-header">
+      <p class="sim-tab-title">${state.simSteps.length} simulation steps</p>
+      <button class="btn btn-primary btn-sm" id="btn-open-modal">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        Step-by-Step
+      </button>
+    </div>
+    <div class="sim-steps-list">
+      ${state.simSteps.map((step, i) => `
+        <div class="sim-step">
+          <div class="sim-step-header">
+            <div class="sim-step-num">${i + 1}</div>
+            <div class="sim-step-desc">${esc(step.description)}</div>
+          </div>
+          ${step.detail ? `<div class="sim-step-detail">${esc(step.detail)}</div>` : ''}
+          ${step.highlight?.length ? `
+            <div class="sim-step-highlight">
+              ${step.highlight.map(h => `<span class="badge badge-red">${esc(h)}</span>`).join('')}
+            </div>` : ''}
+        </div>`).join('')}
+    </div>`;
+
+  $('btn-open-modal')?.addEventListener('click', openSimModal);
+}
+
+// ── "Simulate" navbar button → switch to tab ──────────────────────────
+function openSimulation() {
+  switchTab('simulation');
+}
+
+// ── Simulation modal (step-by-step) ──────────────────────────────────
 function openSimModal() {
   if (!state.simSteps.length) return;
   state.simIndex = 0;
-  renderSimSteps();
+  renderModalSteps();
   $('sim-modal').hidden = false;
   updateSimControls();
 }
 
 function closeSimModal() { $('sim-modal').hidden = true; }
 
-function renderSimSteps() {
+function renderModalSteps() {
   $('sim-steps-container').innerHTML = state.simSteps.map((step, i) => {
     const cls = i < state.simIndex ? 'step-done' : i === state.simIndex ? 'step-active' : '';
     return `
@@ -520,14 +561,18 @@ function renderSimSteps() {
           </div>` : ''}
       </div>`;
   }).join('');
+
+  // Scroll active step into view
+  const active = $('sim-steps-container').querySelector('.step-active');
+  if (active) active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 }
 
 function simPrev() {
-  if (state.simIndex > 0) { state.simIndex--; renderSimSteps(); updateSimControls(); }
+  if (state.simIndex > 0) { state.simIndex--; renderModalSteps(); updateSimControls(); }
 }
 
 function simNext() {
-  if (state.simIndex < state.simSteps.length - 1) { state.simIndex++; renderSimSteps(); updateSimControls(); }
+  if (state.simIndex < state.simSteps.length - 1) { state.simIndex++; renderModalSteps(); updateSimControls(); }
 }
 
 function updateSimControls() {

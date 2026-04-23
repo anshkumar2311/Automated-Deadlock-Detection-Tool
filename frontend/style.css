@@ -741,6 +741,28 @@ input.input-error { border-color: var(--danger); }
   margin: 0 auto;
 }
 
+/* ── Simulation tab inline list ─────────────────────────────────────── */
+.sim-tab-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.sim-tab-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sim-steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 /* ── Simulation steps ───────────────────────────────────────────────── */
 .sim-step {
   background: var(--bg);
